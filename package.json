@@ -1,0 +1,25 @@
+{
+  "name": "abe-rangeslider",
+  "version": "1.0.0",
+  "description": "This plugin integrate inside abecms backend a type range slider, for exemple to position element inside template",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wonknu/abe-rangeslider.git"
+  },
+  "keywords": [
+    "abe",
+    "cms",
+    "plugin",
+    "range slider"
+  ],
+  "author": "wonknu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wonknu/abe-rangeslider/issues"
+  },
+  "homepage": "https://github.com/wonknu/abe-rangeslider#readme"
+}

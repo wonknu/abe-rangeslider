@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="/nouislider.min.css">
+<script type="text/javascript" src="/nouislider.min.js"></script>
+
+<style>
+	.range-slider{
+		margin-bottom: 10px;
+	}
+	.input-group-slider{
+		display: none;
+	}
+</style>
+<script>
+	var destroySlider = function destroySlider () {
+		var rangeSliders = document.querySelectorAll('.range-slider');
+		var daddys = [];
+    Array.prototype.forEach.call(rangeSliders, function (rangeSlider){
+    	var daddy = rangeSlider.parentNode;
+    	try{
+    		rangeSlider.noUiSlider.destroy();
+    	}
+    	catch(e){}
+    	if(rangeSlider.getAttribute('data-coor') == 'x') daddys.push(daddy)
+  	});
+  	Array.prototype.forEach.call(daddys, function (daddy){
+    	daddy.innerHTML = 'Position x :<br><div class="range-slider" data-coor="x"></div>' +
+    										'Position y :<br><div class="range-slider" data-coor="y"></div>';
+  	});
+	};
+
+	var initRangeSlider = function initRangeSlider () {
+		destroySlider();
+    var rangeSliders = document.querySelectorAll('.range-slider');
+    Array.prototype.forEach.call(rangeSliders, function (rangeSlider){
+    	var daddy = rangeSlider.parentNode;
+    	var posX = daddy.outerHTML.match(/data-x=\"(.*?)%\"/)[1];
+    	var posY = daddy.outerHTML.match(/data-y=\"(.*?)%\"/)[1];
+    	var targetInput = daddy.parentNode.querySelector('.form-abe');
+    	var coordinate = rangeSlider.getAttribute('data-coor');
+    	noUiSlider.create(rangeSlider, {start: (coordinate === 'x') ? posX : posY, connect: [true, false], range: { min: 0, max: 100 }});
+			rangeSlider.noUiSlider.on('update', function(val){
+				var newValue = val[0]
+				daddy.setAttribute('data-' + coordinate, newValue + '%');
+				targetInput.value = 'left:' + daddy.getAttribute('data-x') + ';top:' + daddy.getAttribute('data-y');
+		    targetInput.dispatchEvent(new Event('focus'));
+		    targetInput.dispatchEvent(new Event('blur'));
+			});
+    });
+	}
+
+	document.addEventListener("DOMContentLoaded", function(event) {
+		initRangeSlider();
+  });
+
+	window.abe.blocks.onNewBlock(initRangeSlider);
+</script>
